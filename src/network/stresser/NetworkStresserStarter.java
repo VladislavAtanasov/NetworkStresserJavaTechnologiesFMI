@@ -35,6 +35,7 @@ public class NetworkStresserStarter {
 			for (int i = 0; i < requests; i++) {
 				executor.execute(networkStresser);
 			}
+
 			executor.shutdown();
 			executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
 			if (NetworkStresser.isFailed) {
@@ -50,28 +51,12 @@ public class NetworkStresserStarter {
 
 	public String startStresserGui() throws InterruptedException {
 		StringBuilder sb = new StringBuilder();
-		while (true) {
-			CyclicBarrier barrier = new CyclicBarrier(requests);
-			NetworkStresser networkStresser = new NetworkStresser(connManager, barrier);
-			ExecutorService executor = Executors.newFixedThreadPool(requests);
-
-			for (int i = 0; i < requests; i++) {
-				executor.execute(networkStresser);
-			}
-			executor.shutdown();
-			executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
-			if (NetworkStresser.isFailed) {
-				break;
-			}
-			requests++;
-		}
-
-		System.out.printf("Maximum successful request: %d\n", requests - 1);
-		System.out.println("Max time for successful request: " + NetworkStresser.getMaxTimeToRespond() + " ms");
+		startStresser();
 		sb.append(requests - 1);
 		sb.append("\n");
 		sb.append((NetworkStresser.getMaxTimeToRespond() / 1000.0) + " s");
 		return sb.toString();
 
 	}
+
 }

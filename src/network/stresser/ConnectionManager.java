@@ -11,7 +11,7 @@ public class ConnectionManager {
 
 	private RequestInformation info;
 
-	public ConnectionManager(RequestInformation info) throws UnknownHostException, IOException {
+	public ConnectionManager(RequestInformation info) {
 		this.info = info;
 	}
 

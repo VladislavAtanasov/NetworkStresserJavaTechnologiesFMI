@@ -57,7 +57,7 @@ public class StresserGUI extends JFrame {
 	public StresserGUI() {
 		setTitle("Network Stresser");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 762, 408);
+		setBounds(100, 100, 762, 257);
 		contentPane = new JPanel();
 		contentPane.setForeground(UIManager.getColor("InternalFrame.inactiveTitleBackground"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -95,12 +95,14 @@ public class StresserGUI extends JFrame {
 		textField_2.setColumns(10);
 
 		JRadioButton rdbtnGet = new JRadioButton("GET");
+		rdbtnGet.setBackground(Color.WHITE);
 		rdbtnGet.setSelected(true);
 		buttonGroup.add(rdbtnGet);
 		rdbtnGet.setBounds(351, 43, 127, 25);
 		contentPane.add(rdbtnGet);
 
 		JRadioButton rdbtnPost = new JRadioButton("POST");
+		rdbtnPost.setBackground(Color.WHITE);
 		buttonGroup.add(rdbtnPost);
 		rdbtnPost.setBounds(351, 72, 127, 25);
 		contentPane.add(rdbtnPost);
@@ -111,6 +113,11 @@ public class StresserGUI extends JFrame {
 				if (textField.getText().equals("") || textField_1.getText().equals("")
 						|| textField_2.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "Please, fill the required fields.");
+					return;
+				}
+
+				if (textField_2.getText().startsWith("-")) {
+					JOptionPane.showMessageDialog(null, "Port cannot have a negative value.");
 					return;
 				}
 				request = textField.getText();

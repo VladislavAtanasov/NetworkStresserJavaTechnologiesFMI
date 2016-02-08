@@ -19,7 +19,7 @@ public class RequestInformation {
 		this.setPort(port);
 	}
 
-	public RequestInformation(FilesInputGetter files) throws FileNotFoundException, IOException {
+	public RequestInformation(FilesInputGetter files) {
 		this.setRequestInfoFromFile(files.getRequestFile());
 		this.setExpectedResponseFromFile(files.getResponseFile());
 	}

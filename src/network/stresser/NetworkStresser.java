@@ -8,7 +8,7 @@ public class NetworkStresser implements Runnable {
 
 	private static Long maxTimeForResponse = 0L;
 	private ConnectionManager connectionManager;
-	public static Boolean isFailed = false;
+	public static volatile boolean isFailed;
 	private CyclicBarrier barrier;
 
 	public NetworkStresser(ConnectionManager connectionManager, CyclicBarrier barrier) {
@@ -29,13 +29,9 @@ public class NetworkStresser implements Runnable {
 			}
 
 		} catch (IOException | WrongResponseException e) {
-			synchronized (isFailed) {
-				System.out.println(e.getMessage());
-				System.out.println("FAIL");
-				if (!isFailed) {
-					isFailed = true;
-				}
-			}
+			System.out.println(e.getMessage());
+			System.out.println("FAIL");
+			isFailed = true;
 		}
 	}
 
@@ -49,6 +45,7 @@ public class NetworkStresser implements Runnable {
 			this.barrier.await();
 			this.stressNetwork();
 		} catch (InterruptedException | BrokenBarrierException e) {
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
 	}

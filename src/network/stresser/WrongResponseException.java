@@ -1,6 +1,6 @@
 package network.stresser;
 
-public class WrongResponseException extends Throwable {
+public class WrongResponseException extends Exception {
 
 	/**
 	 * 
